@@ -73,8 +73,9 @@ body{
 .viewport.dragging{cursor:grabbing}
 .stage{
   position:absolute;left:0;top:0;width:2400px;height:1600px;
-  transform-origin:0 0;will-change:transform;
+  transform-origin:0 0;
 }
+.viewport.dragging .stage,.stage.moving{will-change:transform}
 .links{
   position:absolute;inset:0;width:2400px;height:1600px;
   pointer-events:none;overflow:visible;z-index:1;
@@ -219,6 +220,29 @@ body{
   .sheet h4{font-size:1.18rem}
   .sheet p{font-size:.81rem}
 }
+
+/* Em telas de toque, preserve a identidade visual sem manter efeitos caros. */
+@media(max-width:767px),(pointer:coarse){
+  body{background:linear-gradient(180deg,#fbf8f3,var(--paper))}
+  .header,.rbtn,.sheet-card{backdrop-filter:none;-webkit-backdrop-filter:none}
+  .viewport{background-size:auto,48px 48px,48px 48px}
+  .link{animation:none;stroke-dasharray:none;stroke-width:2.4}
+  .link.sub{stroke-dasharray:none;stroke-width:1.8}
+  .root{box-shadow:0 12px 30px rgba(108,21,33,.20),0 0 0 6px rgba(255,250,242,.55)}
+  .concept,.child,.fragment,.rbtn{box-shadow:0 7px 18px rgba(35,39,46,.10)}
+  .concept{transition:opacity .16s ease,transform .16s ease}
+  .child{transition:opacity .16s ease,transform .2s ease}
+  .fragment{transition:none}
+  .fragment:hover{transform:translate(-50%,-50%) rotate(var(--rot,0deg))}
+  .sheet{transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+  .sheet-card{max-height:min(76dvh,620px);overflow:auto}
+  .tip{bottom:8px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .link{animation:none;stroke-dasharray:none}
+}
 </style>
 </head>
 <body>
@@ -267,7 +291,7 @@ body{
  <div class="sheet-card">
   <div class="handle"></div>
   <div class="sheet-grid">
-    <img class="sheet-image" id="sheetImg" alt="">
+    <img class="sheet-image" id="sheetImg" alt="" decoding="async">
     <div>
       <div class="sheet-kicker" id="kicker">conceito</div>
       <h4 id="sheetTitle">Título</h4>
@@ -292,7 +316,7 @@ body{
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <img id="modalImg" class="modal-img" alt="">
+      <img id="modalImg" class="modal-img" alt="" decoding="async">
       <div class="modal-body pt-2 text-secondary small" id="modalCaption"></div>
     </div>
   </div>
@@ -359,7 +383,9 @@ const root={x:1200,y:800},stageW=2400,stageH=1600;
 const viewport=document.getElementById("viewport"),stage=document.getElementById("stage"),svg=document.getElementById("links");
 const sheet=document.getElementById("sheet"),sheetImg=document.getElementById("sheetImg"),sheetTitle=document.getElementById("sheetTitle"),sheetText=document.getElementById("sheetText"),sheetSource=document.getElementById("sheetSource"),kicker=document.getElementById("kicker");
 const trail=document.getElementById("trail"),back=document.getElementById("back"),tip=document.getElementById("tip");
-let active=null,scale=.6,tx=0,ty=0,dragging=false,pointers=new Map(),panStart=null,lastDist=null;
+const mobileQuery=matchMedia("(max-width: 767px), (pointer: coarse)");
+const reducedMotionQuery=matchMedia("(prefers-reduced-motion: reduce)");
+let active=null,scale=.6,tx=0,ty=0,dragging=false,pointers=new Map(),panStart=null,lastDist=null,paintFrame=0;
 
 /* criar nós */
 concepts.forEach(c=>{
@@ -374,6 +400,7 @@ fragments.forEach(f=>{
  el.className="fragment";el.dataset.frag=f.id;el.dataset.focus=f.focus;
  el.style.left=f.x+"px";el.style.top=f.y+"px";el.style.setProperty("--rot",f.rot);
  el.innerHTML=`<img src="${IMAGES[f.img]}" alt="${f.title}"><span class="cap">${f.title}</span>`;
+ el.querySelector("img").decoding="async";
  el.addEventListener("click",e=>{e.stopPropagation();openImage(f)});
  stage.appendChild(el);
 });
@@ -422,7 +449,8 @@ function focusConcept(id,showInfo=false){
  document.querySelectorAll(".concept").forEach(n=>{n.classList.toggle("active",n.dataset.id===id);n.classList.toggle("dimmed",n.dataset.id!==id)});
  document.querySelectorAll(".fragment").forEach(n=>n.classList.toggle("dimmed",n.dataset.focus!==id));
  renderChildren();redraw();back.classList.add("show");setTrail(c);
- animateTo(c.x,c.y,Math.min(1.02,Math.max(.80,baseScale()+.22)),470);
+ const focusScale=mobileQuery.matches?Math.min(.78,Math.max(.66,baseScale()+.30)):Math.min(1.02,Math.max(.80,baseScale()+.22));
+ animateTo(c.x,c.y,focusScale,470);
  if(showInfo)showConcept(c);
 }
 function homeView(){
@@ -450,14 +478,21 @@ function openImage(f){
 }
 
 /* câmera */
-function baseScale(){const r=viewport.getBoundingClientRect();return Math.min(.72,Math.max(.45,r.width/1650))}
+function baseScale(){
+ const r=viewport.getBoundingClientRect();
+ return mobileQuery.matches?Math.min(.42,Math.max(.28,r.width/1450)):Math.min(.72,Math.max(.45,r.width/1650));
+}
 function apply(){stage.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
+function queueApply(){if(paintFrame)return;paintFrame=requestAnimationFrame(()=>{paintFrame=0;apply()})}
 function centerAt(x,y,s){const r=viewport.getBoundingClientRect();scale=s;tx=r.width/2-x*s;ty=r.height/2-y*s;apply()}
 function animateTo(x,y,s,d=420){
+ if(mobileQuery.matches)d=Math.min(d,240);
+ if(reducedMotionQuery.matches){centerAt(x,y,s);return}
  const r=viewport.getBoundingClientRect(),st={tx,ty,scale},en={tx:r.width/2-x*s,ty:r.height/2-y*s,scale:s},t0=performance.now();
- function tick(t){const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);tx=st.tx+(en.tx-st.tx)*e;ty=st.ty+(en.ty-st.ty)*e;scale=st.scale+(en.scale-st.scale)*e;apply();if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick);
+ stage.classList.add("moving");
+ function tick(t){const p=Math.min(1,(t-t0)/d),e=1-Math.pow(1-p,3);tx=st.tx+(en.tx-st.tx)*e;ty=st.ty+(en.ty-st.ty)*e;scale=st.scale+(en.scale-st.scale)*e;apply();if(p<1)requestAnimationFrame(tick);else stage.classList.remove("moving")}requestAnimationFrame(tick);
 }
-function zoomAt(f,sx,sy){const old=scale,next=Math.max(.35,Math.min(1.5,old*f));const wx=(sx-tx)/old,wy=(sy-ty)/old;scale=next;tx=sx-wx*scale;ty=sy-wy*scale;apply()}
+function zoomAt(f,sx,sy){const old=scale,min=mobileQuery.matches ? .24 : .35,next=Math.max(min,Math.min(1.5,old*f));const wx=(sx-tx)/old,wy=(sy-ty)/old;scale=next;tx=sx-wx*scale;ty=sy-wy*scale;queueApply()}
 viewport.addEventListener("wheel",e=>{e.preventDefault();const r=viewport.getBoundingClientRect();zoomAt(e.deltaY<0?1.1:.9,e.clientX-r.left,e.clientY-r.top)},{passive:false});
 document.getElementById("plus").onclick=()=>{const r=viewport.getBoundingClientRect();zoomAt(1.16,r.width/2,r.height/2)};
 document.getElementById("minus").onclick=()=>{const r=viewport.getBoundingClientRect();zoomAt(.86,r.width/2,r.height/2)};
@@ -474,7 +509,7 @@ viewport.addEventListener("pointerdown",e=>{
 });
 viewport.addEventListener("pointermove",e=>{
  if(!pointers.has(e.pointerId))return;pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
- if(pointers.size===1&&panStart){const dx=e.clientX-panStart.x,dy=e.clientY-panStart.y;if(Math.hypot(dx,dy)>4)dragging=true;tx=panStart.tx+dx;ty=panStart.ty+dy;apply()}
+ if(pointers.size===1&&panStart){const dx=e.clientX-panStart.x,dy=e.clientY-panStart.y;if(Math.hypot(dx,dy)>4)dragging=true;tx=panStart.tx+dx;ty=panStart.ty+dy;queueApply()}
  else if(pointers.size===2){const a=[...pointers.values()],d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(lastDist){const r=viewport.getBoundingClientRect(),cx=(a[0].x+a[1].x)/2-r.left,cy=(a[0].y+a[1].y)/2-r.top;zoomAt(d/lastDist,cx,cy)}lastDist=d}
 });
 function endP(e){pointers.delete(e.pointerId);if(pointers.size<2)lastDist=null;if(!pointers.size){viewport.classList.remove("dragging");panStart=null;setTimeout(()=>dragging=false,40)}}
@@ -485,9 +520,9 @@ viewport.addEventListener("click",e=>{
  if(e.target===viewport && active){sheet.classList.remove("show")}
 });
 
-window.addEventListener("resize",()=>{if(!active)centerAt(root.x,root.y,baseScale())});
+window.addEventListener("resize",()=>{if(!active)centerAt(root.x,root.y,baseScale())},{passive:true});
 redraw();setTrail(null);requestAnimationFrame(()=>centerAt(root.x,root.y,baseScale()));
-setTimeout(()=>tip.style.opacity=".15",4200);
+setTimeout(()=>{tip.style.transition="opacity .25s";tip.style.opacity="0";setTimeout(()=>tip.hidden=true,260)},3200);
 </script>
 </body>
 </html>
