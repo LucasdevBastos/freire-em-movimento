@@ -16,7 +16,7 @@ const concepts=[
   short:"Ninguém ocupa sozinho o lugar de quem ensina ou aprende.",
   text:"No diálogo, educador e educando participam do processo. O animador cria condições para que o grupo pense e fale por si, em vez de simplesmente receber um saber pronto.",
   children:[["Troca de saberes","Ensinar e aprender acontecem em relação."],["Participação criadora","O grupo não funciona como plateia."],["Animador","Coordena e favorece o debate sem substituir o pensamento do grupo."]]},
- {id:"universo",title:"Universo vocabular",icon:"bi-ear",tone:"#347789",x:1920,y:800,page:"pp. 12–15, 25",image:"ficha",
+ {id:"universo",title:"Universo vocabular",icon:"bi-ear",tone:"#347789",x:1920,y:800,page:"pp. 12–15",image:"ficha",
   short:"Antes de ensinar a palavra, escuta-se a vida.",
   text:"O trabalho começa com a pesquisa da fala, do cotidiano, do trabalho, das experiências e dos modos de compreender o mundo presentes na comunidade.",
   children:[["Escuta","Palavras, frases, histórias, ditos e experiências."],["Pesquisa participada","A comunidade também participa da descoberta."],["Realidade local","O material nasce do lugar onde o grupo vive."]]},
@@ -24,7 +24,7 @@ const concepts=[
   short:"Uma palavra pode abrir caminho para muitas outras.",
   text:"As palavras geradoras vêm do universo pesquisado. Elas combinam possibilidades fonêmicas com sentido vivido e servem tanto à alfabetização quanto à discussão da realidade.",
   children:[["Riqueza fonêmica","A palavra permite trabalhar sons e combinações."],["Sentido vivido","Ela precisa fazer sentido para o grupo."],["Descoberta","A partir dela, novas palavras começam a ser criadas."]]},
- {id:"temas",title:"Temas geradores",icon:"bi-lightbulb",tone:"#b88a2a",x:1200,y:1320,page:"pp. 20–23, 25–26",image:"ficha",
+ {id:"temas",title:"Temas geradores",icon:"bi-lightbulb",tone:"#b88a2a",x:1200,y:1320,page:"pp. 20–23",image:"ficha",
   short:"Das palavras surgem questões maiores da vida coletiva.",
   text:"Os temas geradores ampliam a conversa para trabalho, natureza, produção, relações sociais, poder e outros problemas concretos da comunidade.",
   children:[["Trabalho e natureza","O mundo do trabalho aparece como tema de reflexão."],["Relações sociais","A vida coletiva traz questões de poder e organização."],["Problemas concretos","O debate parte de situações que o grupo reconhece."]]},
@@ -308,6 +308,18 @@ function appendCoverPage(host){
  ["Professor: Adriano Sobral da Silva","Alunos: Maria Mirella de Souza Silva e Marcos Antônio de Souza Silva","Curso de Pedagogia — 4º período"].forEach(text=>{const row=document.createElement("div");row.textContent=text;info.appendChild(row)});
  card.append(emblem,eyebrow,title,subtitle,rule,info);page.appendChild(card);host.appendChild(page);
 }
+/* Última página do arquivo baixado: fonte do trabalho e acesso ao mapa interativo. */
+function appendReferencesPage(host){
+ const page=document.createElement("section");
+ page.style.cssText="width:1200px;height:848px;padding:84px 96px;background:radial-gradient(circle at 88% 14%,rgba(184,138,42,.14),transparent 26%),linear-gradient(145deg,#fbf8f3,#f4eee4);color:#272c33;display:flex;flex-direction:column;justify-content:center;";
+ const eyebrow=document.createElement("div");eyebrow.textContent="REFERÊNCIAS E ACESSO";eyebrow.style.cssText="color:#b88a2a;font:800 13px Inter,system-ui,sans-serif;letter-spacing:.2em;margin-bottom:18px;";
+ const title=document.createElement("h1");title.textContent="Referências";title.style.cssText="margin:0;color:#193b62;font:800 46px/1.08 Georgia,serif;";
+ const rule=document.createElement("div");rule.style.cssText="width:76px;height:3px;border-radius:9px;background:#8c1e2e;margin:22px 0 28px;";
+ const reference=document.createElement("p");reference.textContent="BRANDÃO, Carlos Rodrigues. O que é o Método Paulo Freire.";reference.style.cssText="max-width:820px;margin:0;color:#454a51;font:500 22px/1.55 Inter,system-ui,sans-serif;";
+ const note=document.createElement("p");note.textContent="Para ver o mapa mental em movimento, acesse:";note.style.cssText="margin:42px 0 8px;color:#70737a;font:600 18px/1.4 Inter,system-ui,sans-serif;";
+ const link=document.createElement("div");link.textContent="https://lucasdevbastos.github.io/freire-em-movimento/";link.style.cssText="color:#8c1e2e;font:700 21px/1.35 Inter,system-ui,sans-serif;overflow-wrap:anywhere;";
+ page.append(eyebrow,title,rule,reference,note,link);host.appendChild(page);
+}
 function appendMapPage(host,c){
  const kids=childPoints(c),pad=52,focusedFragment=fragments.find(f=>f.focus===c.id);
  const minX=Math.min(c.x-145,...kids.map(p=>p.x-125),...(focusedFragment?[focusedFragment.x-90]:[])),maxX=Math.max(c.x+145,...kids.map(p=>p.x+125),...(focusedFragment?[focusedFragment.x+90]:[]));
@@ -367,6 +379,14 @@ async function buildPdf(){
    pdf.addImage(data,"JPEG",(pageW-drawW)/2,(pageH-drawH)/2,drawW,drawH,undefined,"FAST");
   }finally{host.remove();if(canvas){canvas.width=canvas.height=1;canvas=null}}
  }
+ pdfStatus.textContent="Preparando referências…";
+ const references=makeExportHost(1200);appendReferencesPage(references);
+ try{
+  canvas=await exportCanvas(references);const data=canvas.toDataURL("image/jpeg",.94);
+  pdf.addPage(paper,"landscape");
+  const scale=Math.min((pageW-margin*2)/canvas.width,(pageH-margin*2)/canvas.height),drawW=canvas.width*scale,drawH=canvas.height*scale;
+  pdf.addImage(data,"JPEG",(pageW-drawW)/2,(pageH-drawH)/2,drawW,drawH,undefined,"FAST");
+ }finally{references.remove();if(canvas){canvas.width=canvas.height=1;canvas=null}}
  pdf.save("mapa-mental-paulo-freire.pdf");
 }
 generatePdfButton.addEventListener("click",async()=>{
