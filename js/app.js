@@ -317,7 +317,7 @@ function appendReferencesPage(host){
  const rule=document.createElement("div");rule.style.cssText="width:76px;height:3px;border-radius:9px;background:#8c1e2e;margin:22px 0 28px;";
  const reference=document.createElement("p");reference.textContent="BRANDÃO, Carlos Rodrigues. O que é o Método Paulo Freire.";reference.style.cssText="max-width:820px;margin:0;color:#454a51;font:500 22px/1.55 Inter,system-ui,sans-serif;";
  const note=document.createElement("p");note.textContent="Para ver o mapa mental em movimento, acesse:";note.style.cssText="margin:42px 0 8px;color:#70737a;font:600 18px/1.4 Inter,system-ui,sans-serif;";
- const link=document.createElement("div");link.textContent="https://lucasdevbastos.github.io/freire-em-movimento/";link.style.cssText="color:#8c1e2e;font:700 21px/1.35 Inter,system-ui,sans-serif;overflow-wrap:anywhere;";
+ const link=document.createElement("div");link.textContent="Acesse aqui o mapa mental";link.style.cssText="color:#8c1e2e;font:700 21px/1.35 Inter,system-ui,sans-serif;";
  page.append(eyebrow,title,rule,reference,note,link);host.appendChild(page);
 }
 function appendMapPage(host,c){
@@ -383,9 +383,11 @@ async function buildPdf(){
  const references=makeExportHost(1200);appendReferencesPage(references);
  try{
   canvas=await exportCanvas(references);const data=canvas.toDataURL("image/jpeg",.94);
-  pdf.addPage(paper,"landscape");
-  const scale=Math.min((pageW-margin*2)/canvas.width,(pageH-margin*2)/canvas.height),drawW=canvas.width*scale,drawH=canvas.height*scale;
-  pdf.addImage(data,"JPEG",(pageW-drawW)/2,(pageH-drawH)/2,drawW,drawH,undefined,"FAST");
+ pdf.addPage(paper,"landscape");
+ const scale=Math.min((pageW-margin*2)/canvas.width,(pageH-margin*2)/canvas.height),drawW=canvas.width*scale,drawH=canvas.height*scale;
+ pdf.addImage(data,"JPEG",(pageW-drawW)/2,(pageH-drawH)/2,drawW,drawH,undefined,"FAST");
+  /* Mantém o endereço fora da composição visual, mas torna o texto final clicável. */
+  pdf.link((pageW-drawW)/2+drawW*.08,(pageH-drawH)/2+drawH*.62,drawW*.58,drawH*.06,{url:"https://lucasdevbastos.github.io/freire-em-movimento/"});
  }finally{references.remove();if(canvas){canvas.width=canvas.height=1;canvas=null}}
  pdf.save("mapa-mental-paulo-freire.pdf");
 }
