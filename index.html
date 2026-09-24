@@ -30,7 +30,10 @@
     <button data-home>Mapa mental</button><i class="bi bi-chevron-right"></i><span class="now">Explore livremente</span>
   </div>
   <section class="academic" aria-labelledby="academicTitle">
-    <h2 class="academic-heading" id="academicTitle"><span class="academic-mark"><i class="bi bi-mortarboard-fill"></i></span> Identificação acadêmica</h2>
+    <div class="academic-top">
+      <h2 class="academic-heading" id="academicTitle"><span class="academic-mark"><i class="bi bi-mortarboard-fill"></i></span> Identificação acadêmica</h2>
+      <button class="academic-toggle" id="academicToggle" type="button" aria-label="Ocultar identificação acadêmica" aria-expanded="true"><i class="bi bi-x-lg" aria-hidden="true"></i></button>
+    </div>
     <div class="academic-info">
       <div class="academic-field"><span>Disciplina</span><strong>Educação de Jovens e Adultos</strong></div>
       <div class="academic-field"><span>Professor</span><strong>Adriano Sobral da Silva</strong></div>
@@ -39,6 +42,7 @@
       <div class="academic-field academic-students"><span>Alunos</span><strong>Maria Mirella de Souza Silva e Marcos Antônio de Souza Silva</strong></div>
     </div>
   </section>
+  <button class="academic-restore" id="academicRestore" type="button" aria-label="Mostrar identificação acadêmica" aria-expanded="false" hidden><i class="bi bi-mortarboard-fill" aria-hidden="true"></i></button>
 </header>
 
 <main class="viewport" id="viewport">

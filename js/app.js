@@ -8,7 +8,7 @@ const IMAGES={
 };
 
 const concepts=[
- {id:"origem",title:"Origem",icon:"bi-clock-history",tone:"#b65b35",x:1200,y:285,page:"pp. 8–10",image:"ficha",
+ {id:"origem",title:"Origem",icon:"bi-clock-history",tone:"#b65b35",x:1200,y:285,page:"pp. 8–10",image:null,
   short:"As experiências que colocaram o método em movimento.",
   text:"Brandão situa o método nas experiências de educação popular do início dos anos 1960, ligadas à equipe de Paulo Freire. Recife, Angicos e Mossoró aparecem como referências importantes dessa trajetória.",
   children:[["Recife e Nordeste","As primeiras experiências se ligam à educação popular."],["Angicos e Mossoró","Experiências que ajudaram a tornar o método conhecido."],["Um projeto maior","A alfabetização era parte de uma proposta mais ampla de educação."]]},
@@ -16,15 +16,15 @@ const concepts=[
   short:"Ninguém ocupa sozinho o lugar de quem ensina ou aprende.",
   text:"No diálogo, educador e educando participam do processo. O animador cria condições para que o grupo pense e fale por si, em vez de simplesmente receber um saber pronto.",
   children:[["Troca de saberes","Ensinar e aprender acontecem em relação."],["Participação criadora","O grupo não funciona como plateia."],["Animador","Coordena e favorece o debate sem substituir o pensamento do grupo."]]},
- {id:"universo",title:"Universo vocabular",icon:"bi-ear",tone:"#347789",x:1920,y:800,page:"pp. 12–15",image:"ficha",
+ {id:"universo",title:"Universo vocabular",icon:"bi-ear",tone:"#347789",x:1920,y:800,page:"pp. 12–15, 25",image:"ficha",
   short:"Antes de ensinar a palavra, escuta-se a vida.",
   text:"O trabalho começa com a pesquisa da fala, do cotidiano, do trabalho, das experiências e dos modos de compreender o mundo presentes na comunidade.",
   children:[["Escuta","Palavras, frases, histórias, ditos e experiências."],["Pesquisa participada","A comunidade também participa da descoberta."],["Realidade local","O material nasce do lugar onde o grupo vive."]]},
- {id:"palavras",title:"Palavras geradoras",icon:"bi-type",tone:"#69569b",x:1690,y:1170,page:"pp. 16–19",image:"benedito",
+ {id:"palavras",title:"Palavras geradoras",icon:"bi-type",tone:"#69569b",x:1690,y:1170,page:"pp. 16–19, 31–38",image:"benedito",
   short:"Uma palavra pode abrir caminho para muitas outras.",
   text:"As palavras geradoras vêm do universo pesquisado. Elas combinam possibilidades fonêmicas com sentido vivido e servem tanto à alfabetização quanto à discussão da realidade.",
   children:[["Riqueza fonêmica","A palavra permite trabalhar sons e combinações."],["Sentido vivido","Ela precisa fazer sentido para o grupo."],["Descoberta","A partir dela, novas palavras começam a ser criadas."]]},
- {id:"temas",title:"Temas geradores",icon:"bi-lightbulb",tone:"#b88a2a",x:1200,y:1320,page:"pp. 20–23",image:"trabalho",
+ {id:"temas",title:"Temas geradores",icon:"bi-lightbulb",tone:"#b88a2a",x:1200,y:1320,page:"pp. 20–23, 25–26",image:"ficha",
   short:"Das palavras surgem questões maiores da vida coletiva.",
   text:"Os temas geradores ampliam a conversa para trabalho, natureza, produção, relações sociais, poder e outros problemas concretos da comunidade.",
   children:[["Trabalho e natureza","O mundo do trabalho aparece como tema de reflexão."],["Relações sociais","A vida coletiva traz questões de poder e organização."],["Problemas concretos","O debate parte de situações que o grupo reconhece."]]},
@@ -32,15 +32,15 @@ const concepts=[
   short:"Uma roda de aprendizagem onde a palavra circula.",
   text:"O círculo de cultura substitui a lógica de uma sala centrada no professor. Imagens, situações e perguntas alimentam o diálogo, e todos participam do trabalho de interpretar e pensar.",
   children:[["Fichas de cultura","Imagens provocam a primeira conversa."],["Roda de diálogo","O conhecimento é trabalhado em participação."],["Problematizar","Perguntar o que vemos, por que é assim e como poderia ser."]]},
- {id:"alfabetizacao",title:"Alfabetização",icon:"bi-pencil-square",tone:"#193b62",x:480,y:800,page:"pp. 33–41",image:"trabalho",
+ {id:"alfabetizacao",title:"Alfabetização",icon:"bi-pencil-square",tone:"#193b62",x:480,y:800,page:"pp. 31–41",image:"trabalho",
   short:"A palavra se abre em sons, combinações, frases e textos.",
   text:"A palavra geradora é vista em contexto, desdobrada em famílias fonêmicas e recombinada. Aos poucos surgem novas palavras, frases e escritos produzidos pelos próprios educandos.",
   children:[["Famílias fonêmicas","A palavra é desdobrada em partes."],["Criar palavras","O grupo deixa de apenas repetir e começa a combinar."],["Escrever o próprio mundo","Bilhetes, notícias, frases e outros textos aparecem no processo."]]},
- {id:"conscientizacao",title:"Conscientização",icon:"bi-eye",tone:"#8c1e2e",x:710,y:430,page:"p. 68",image:"escrita",
+ {id:"conscientizacao",title:"Conscientização",icon:"bi-eye",tone:"#8c1e2e",x:710,y:430,page:"pp. 53–57, 64–68",image:"escrita",
   short:"Ler o mundo de forma cada vez mais crítica.",
   text:"Brandão apresenta a conscientização como um processo contínuo de transformação do modo de compreender o mundo, relacionado à reflexão coletiva e à prática.",
   children:[["Processo contínuo","Não existe como um ponto final."],["Leitura crítica","A realidade passa a ser interrogada e compreendida."],["Reflexão e prática","Pensamento e ação permanecem ligados."]]},
- {id:"reinventar",title:"Reinventar",icon:"bi-arrow-repeat",tone:"#486f5d",x:1200,y:1015,page:"pp. 41–42",image:"escrita",
+ {id:"reinventar",title:"Reinventar",icon:"bi-arrow-repeat",tone:"#486f5d",x:1200,y:1620,page:"pp. 41–42",image:null,
   short:"O método não é uma receita: precisa permanecer vivo.",
   text:"Brandão insiste em ajustar, inovar e criar. Cada realidade exige uma forma própria de trabalho, sem perder o diálogo, a participação e a ligação com a vida concreta.",
   children:[["Ajustar","O contexto muda a forma de trabalhar."],["Inovar","Instrumentos e procedimentos podem ser recriados."],["Criar","O método se realiza no fazer coletivo."]]}
@@ -55,14 +55,32 @@ const fragments=[
 ];
 
 const root={x:1200,y:800},stageW=2400,stageH=2200;
+/* Coordenadas originais do desktop e composição em zigue-zague para o mobile. */
+const desktopLayout={
+ root:{x:root.x,y:root.y},
+ concepts:Object.fromEntries(concepts.map(c=>[c.id,{x:c.x,y:c.y}])),
+ fragments:Object.fromEntries(fragments.map(f=>[f.id,{x:f.x,y:f.y}]))
+};
 const viewport=document.getElementById("viewport"),stage=document.getElementById("stage"),svg=document.getElementById("links");
-const sheet=document.getElementById("sheet"),sheetImg=document.getElementById("sheetImg"),sheetTitle=document.getElementById("sheetTitle"),sheetText=document.getElementById("sheetText"),sheetSource=document.getElementById("sheetSource"),kicker=document.getElementById("kicker");
+const sheet=document.getElementById("sheet"),sheetGrid=sheet.querySelector(".sheet-grid"),sheetImg=document.getElementById("sheetImg"),sheetTitle=document.getElementById("sheetTitle"),sheetText=document.getElementById("sheetText"),sheetSource=document.getElementById("sheetSource"),kicker=document.getElementById("kicker");
 const trail=document.getElementById("trail"),back=document.getElementById("back"),tip=document.getElementById("tip");
 const mobileQuery=matchMedia("(max-width: 767px), (pointer: coarse)");
 const reducedMotionQuery=matchMedia("(prefers-reduced-motion: reduce)");
 let active=null,scale=.6,tx=0,ty=0,dragging=false,pointers=new Map(),panStart=null,lastDist=null,paintFrame=0,cameraFrame=0;
 let activeChildPoints=[];
 let viewportRect=viewport.getBoundingClientRect();
+
+/* Ficha acadêmica retrátil: ao recolher, a altura do cabeçalho é liberada para o mapa. */
+const academicPanel=document.querySelector(".academic"),academicToggle=document.getElementById("academicToggle"),academicRestore=document.getElementById("academicRestore");
+function setAcademicVisibility(open){
+ academicPanel.classList.toggle("is-collapsed",!open);
+ academicToggle.setAttribute("aria-expanded",String(open));academicRestore.setAttribute("aria-expanded",String(open));
+ academicRestore.hidden=open;
+ if(open)requestAnimationFrame(()=>academicToggle.focus());
+ else requestAnimationFrame(()=>academicRestore.focus());
+}
+academicToggle.addEventListener("click",()=>setAcademicVisibility(false));
+academicRestore.addEventListener("click",()=>setAcademicVisibility(true));
 
 /* criar nós */
 concepts.forEach(c=>{
@@ -81,6 +99,35 @@ fragments.forEach(f=>{
  el.addEventListener("click",e=>{e.stopPropagation();openImage(f)});
  stage.appendChild(el);
 });
+
+/* Layout responsivo: no celular, os ramos se alternam em lados opostos do núcleo. */
+function applyResponsiveLayout(){
+ const isMobileLayout=window.matchMedia("(max-width: 768px)").matches;
+ const smallMobile=viewportRect.width<=480;
+ const offset=smallMobile?115:210;
+ const mobileNodes=[
+  ["origem",-1,640],["dialogo",1,820],["universo",-1,1000],
+  ["palavras",1,1180],["temas",-1,1360],["circulo",1,1540],
+  ["alfabetizacao",-1,1720],["conscientizacao",1,1900],["reinventar",-1,2080]
+ ];
+ const mobileFragments={frag1:{x:820,y:620},frag2:{x:1580,y:850},frag3:{x:820,y:1120},frag4:{x:1580,y:1450},frag5:{x:820,y:1800}};
+ root.x=desktopLayout.root.x;root.y=isMobileLayout?400:desktopLayout.root.y;
+ concepts.forEach(c=>{
+  const mobile=mobileNodes.find(node=>node[0]===c.id);
+  const position=isMobileLayout?{x:1200+mobile[1]*offset,y:mobile[2]}:desktopLayout.concepts[c.id];
+  c.x=position.x;c.y=position.y;
+  const el=document.querySelector(`.concept[data-id="${c.id}"]`);
+  if(el){el.style.left=c.x+"px";el.style.top=c.y+"px";el.dataset.mobileSide=isMobileLayout?(mobile[1]<0?"left":"right"):""}
+ });
+ fragments.forEach(f=>{
+  const position=isMobileLayout?mobileFragments[f.id]:desktopLayout.fragments[f.id];
+  f.x=position.x;f.y=position.y;
+  const el=document.querySelector(`.fragment[data-frag="${f.id}"]`);
+  if(el){el.style.left=f.x+"px";el.style.top=f.y+"px"}
+ });
+ if(active){activeChildPoints=childPoints(concepts.find(c=>c.id===active));renderChildren()}
+ redraw();
+}
 
 /* Layout dos ramos: cada novo card procura a posição livre mais próxima da direção
    natural do tópico. Os retângulos de segurança representam o tamanho visual dos
@@ -122,7 +169,8 @@ function redraw(){
  svg.innerHTML="";
  concepts.forEach((c,i)=>{
   const p=document.createElementNS("http://www.w3.org/2000/svg","path");
-  p.setAttribute("d",curve(root,{x:c.x,y:c.y},i%2?.06:-.06));
+  const bend=window.matchMedia("(max-width: 768px)").matches?(c.x<root.x?-.14:.14):(i%2?.06:-.06);
+  p.setAttribute("d",curve(root,{x:c.x,y:c.y},bend));
   p.setAttribute("class","link"+(active&&active!==c.id?" dim":""));
   svg.appendChild(p);
  });
@@ -168,11 +216,18 @@ function homeView(){
 }
 function showConcept(c){
  kicker.textContent=`Conceito · ${c.page}`;sheetTitle.textContent=c.title;sheetText.textContent=c.text;sheetSource.textContent=`Carlos Rodrigues Brandão · ${c.page}`;
- sheetImg.src=IMAGES[c.image];sheetImg.alt=c.title;sheet.classList.add("show");
+ setSheetImage(c.image,c.title);sheet.classList.add("show");
 }
 function showChild(c,ch){
  kicker.textContent=`${c.title} · conexão`;sheetTitle.textContent=ch[0];sheetText.textContent=ch[1];sheetSource.textContent=`Ramo de ${c.title}`;
- sheetImg.src=IMAGES[c.image];sheetImg.alt=ch[0];sheet.classList.add("show");
+ setSheetImage(c.image,ch[0]);sheet.classList.add("show");
+}
+function setSheetImage(imageKey,alt){
+ const image=IMAGES[imageKey];
+ sheetGrid.classList.toggle("no-image",!image);
+ sheetImg.hidden=!image;
+ if(image){sheetImg.src=image;sheetImg.alt=alt}
+ else{sheetImg.removeAttribute("src");sheetImg.alt=""}
 }
 
 /* imagens */
@@ -186,7 +241,9 @@ function openImage(f){
 /* câmera */
 function baseScale(){
  const r=viewportRect;
- return mobileQuery.matches?Math.min(.56,Math.max(.42,r.width/1050)):Math.min(.90,Math.max(.62,r.width/1400));
+ if(window.matchMedia("(max-width: 480px)").matches)return Math.min(.62,Math.max(.58,r.width/600));
+ if(window.matchMedia("(max-width: 768px)").matches)return Math.min(.78,Math.max(.65,r.width/960));
+ return Math.min(.90,Math.max(.62,r.width/1400));
 }
 function apply(){stage.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
 function queueApply(){if(paintFrame)return;paintFrame=requestAnimationFrame(()=>{paintFrame=0;apply()})}
@@ -265,14 +322,15 @@ function appendMapPage(host,c){
  c.children.forEach((ch,i)=>{const el=document.createElement("div");el.className="child show";el.style.left=`${kids[i].x-minX+pad}px`;el.style.top=`${kids[i].y-minY+pad}px`;el.innerHTML=`<strong>${ch[0]}</strong><small>${ch[1]}</small>`;map.appendChild(el)});
  if(focusedFragment){const fnode=document.querySelector(`.fragment[data-frag="${focusedFragment.id}"]`).cloneNode(true);fnode.style.left=`${focusedFragment.x-minX+pad}px`;fnode.style.top=`${focusedFragment.y-minY+pad}px`;fnode.style.opacity="1";map.appendChild(fnode)}
  page.appendChild(map);
- const details=document.createElement("div");details.style.cssText="display:grid;grid-template-columns:1fr 180px;gap:22px;margin:18px auto 0;padding:19px 22px;background:#fffaf2;border:1px solid rgba(25,59,98,.15);border-radius:18px;max-width:1200px;";
+ const details=document.createElement("div");details.style.cssText=`display:grid;grid-template-columns:${IMAGES[c.image]?"1fr 180px":"1fr"};gap:22px;margin:18px auto 0;padding:19px 22px;background:#fffaf2;border:1px solid rgba(25,59,98,.15);border-radius:18px;max-width:1200px;`;
  const copy=document.createElement("div"),heading=document.createElement("h2"),description=document.createElement("p"),short=document.createElement("p");
  heading.textContent=c.title;heading.style.cssText="margin:0 0 7px;color:#193b62;font:700 26px Georgia,serif";
  short.textContent=c.short;short.style.cssText="margin:0 0 9px;color:#70737a;font-size:15px;font-weight:600";
  description.textContent=c.text;description.style.cssText="margin:0;color:#454a51;font-size:15px;line-height:1.5";
  copy.append(heading,short,description);
- const image=document.createElement("img");image.src=IMAGES[c.image];image.alt=`Imagem relacionada a ${c.title}`;image.style.cssText="width:180px;height:150px;object-fit:cover;border-radius:14px;align-self:center;background:#eee6da";
- details.append(copy,image);page.appendChild(details);host.appendChild(page);
+ details.appendChild(copy);
+ if(IMAGES[c.image]){const image=document.createElement("img");image.src=IMAGES[c.image];image.alt=`Imagem relacionada a ${c.title}`;image.style.cssText="width:180px;height:150px;object-fit:cover;border-radius:14px;align-self:center;background:#eee6da";details.appendChild(image)}
+ page.appendChild(details);host.appendChild(page);
 }
 async function buildPdf(){
  if(!window.jspdf?.jsPDF)throw new Error("A biblioteca de PDF não carregou. Verifique a conexão e tente novamente.");
@@ -340,6 +398,11 @@ viewport.addEventListener("click",e=>{
 });
 
 let resizeFrame=0;
-new ResizeObserver(()=>{if(resizeFrame)return;resizeFrame=requestAnimationFrame(()=>{resizeFrame=0;viewportRect=viewport.getBoundingClientRect();if(!active)centerAt(root.x,root.y,baseScale())})}).observe(viewport);
-redraw();setTrail(null);requestAnimationFrame(()=>centerAt(root.x,root.y,baseScale()));
+new ResizeObserver(()=>{if(resizeFrame)return;resizeFrame=requestAnimationFrame(()=>{
+ resizeFrame=0;viewportRect=viewport.getBoundingClientRect();applyResponsiveLayout();
+ const focused=active&&concepts.find(c=>c.id===active);
+ if(focused)centerAt(focused.x,focused.y,Math.max(baseScale(),mobileQuery.matches ? .74 : .9));
+ else centerAt(root.x,root.y,baseScale());
+})}).observe(viewport);
+applyResponsiveLayout();setTrail(null);requestAnimationFrame(()=>centerAt(root.x,root.y,baseScale()));
 setTimeout(()=>{tip.style.transition="opacity .25s";tip.style.opacity="0";setTimeout(()=>tip.hidden=true,260)},3200);
